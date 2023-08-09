@@ -27,9 +27,10 @@ class Prompter(object):
 
     def generate_prompt(
         self,
-        instruction: str,
+        instruction: Union[None, str] = None,
         input: Union[None, str] = None,
         label: Union[None, str] = None,
+        document: Union[None, str] = None
     ) -> str:
         # returns the full prompt from instruction and optional input
         # if a label (=response, =output) is provided, it's also appended.
@@ -41,6 +42,8 @@ class Prompter(object):
             res = self.template["prompt_no_input"].format(
                 instruction=instruction
             )
+        if document:
+            res = f"{document}"
         if label:
             res = f"{res}{label}"
         if self._verbose:

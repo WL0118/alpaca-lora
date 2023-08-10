@@ -151,10 +151,15 @@ def train(
             full_prompt = prompter.generate_prompt(
                 document = data_point["document"]
             )
-        else:
+        elif data_point.get("input") is not None:
             full_prompt = prompter.generate_prompt(
                 instruction = data_point["instruction"],
                 input = data_point["input"],
+                label = data_point["output"],
+            )
+        else:
+            full_prompt = prompter.generate_prompt(
+                instruction = data_point["instruction"],
                 label = data_point["output"],
             )
         tokenized_full_prompt = tokenize(full_prompt)
